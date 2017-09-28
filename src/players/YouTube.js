@@ -11,6 +11,10 @@ const BLANK_VIDEO_URL = 'https://www.youtube.com/watch?v=GlCmAC4MHek'
 
 class YouTube extends Component {
   static displayName = 'YouTube'
+  static canPlay = url => MATCH_URL.test(url)
+  static shouldPreload = props => props.config.youtube.preload
+  static preloadURL = BLANK_VIDEO_URL
+  static loopOnEnded = true
   callPlayer = callPlayer
   load (url) {
     const { isReady, playsinline, controls, config, onError } = this.props
@@ -97,9 +101,4 @@ class YouTube extends Component {
   }
 }
 
-export default createPlayer(YouTube, {
-  canPlay: MATCH_URL,
-  shouldPreload: props => props.config.youtube.preload,
-  preloadURL: BLANK_VIDEO_URL,
-  loopOnEnded: true
-})
+export default createPlayer(YouTube)

@@ -11,6 +11,10 @@ const BLANK_VIDEO_URL = 'http://www.dailymotion.com/video/x522udb'
 
 class DailyMotion extends Component {
   static displayName = 'DailyMotion'
+  static canPlay = url => MATCH_URL.test(url)
+  static shouldPreload = props => props.config.dailymotion.preload
+  static preloadURL = BLANK_VIDEO_URL
+  static loopOnEnded = true
   callPlayer = callPlayer
   parseId (url) {
     const m = url.match(MATCH_URL)
@@ -98,9 +102,4 @@ class DailyMotion extends Component {
   }
 }
 
-export default createPlayer(DailyMotion, {
-  canPlay: MATCH_URL,
-  shouldPreload: props => props.config.dailymotion.preload,
-  preloadURL: BLANK_VIDEO_URL,
-  loopOnEnded: true
-})
+export default createPlayer(DailyMotion)

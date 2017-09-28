@@ -10,6 +10,9 @@ const BLANK_VIDEO_URL = 'https://vimeo.com/127250231'
 
 class Vimeo extends Component {
   static displayName = 'Vimeo'
+  static canPlay = url => MATCH_URL.test(url)
+  static shouldPreload = props => props.config.vimeo.preload
+  static preloadURL = BLANK_VIDEO_URL
   callPlayer = callPlayer
   duration = null
   load (url, isReady) {
@@ -84,8 +87,4 @@ class Vimeo extends Component {
   }
 }
 
-export default createPlayer(Vimeo, {
-  canPlay: MATCH_URL,
-  shouldPreload: props => props.config.vimeo.preload,
-  preloadURL: BLANK_VIDEO_URL
-})
+export default createPlayer(Vimeo)

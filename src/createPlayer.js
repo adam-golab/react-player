@@ -4,16 +4,16 @@ import { propTypes, defaultProps } from './props'
 
 const SEEK_ON_PLAY_EXPIRY = 5000
 
-export default function createPlayer (Player, options) {
+export default function createPlayer (Player) { // we can pass all options in static methods of Player
   return class PlayerWrapper extends Component {
     static propTypes = propTypes
     static defaultProps = defaultProps
     static displayName = `PlayerWrapper(${Player.displayName})`
     static canPlay (url) {
-      if (typeof options.canPlay === 'function') {
-        return options.canPlay(url)
+      if (typeof Player.canPlay === 'function') {
+        return Player.canPlay(url)
       }
-      return options.canPlay.test(url)
+      return Player.canPlay.test(url)
     }
     mounted = false
     isReady = false
@@ -25,9 +25,9 @@ export default function createPlayer (Player, options) {
       const { url } = this.props
       if (url) {
         this.player.load(url)
-      } else if (options.shouldPreload && options.shouldPreload(this.props)) {
+      } else if (Player.shouldPreload && Player.shouldPreload(this.props)) {
         this.preloading = true
-        this.player.load(options.preloadURL)
+        this.player.load(Player.preloadURL)
       }
     }
     componentWillUnmount () {
@@ -97,7 +97,7 @@ export default function createPlayer (Player, options) {
     onPlay = () => {
       const { volume, muted, onStart, onPlay, playbackRate } = this.props
       if (this.startOnPlay) {
-        if (options.setPlaybackRate) {
+        if (Player.setPlaybackRate) {
           this.player.setPlaybackRate(playbackRate)
         }
         this.player.setVolume(muted ? 0 : volume)
@@ -130,7 +130,7 @@ export default function createPlayer (Player, options) {
     }
     onEnded = () => {
       const { loop, onEnded } = this.props
-      if (options.loopOnEnded && loop) {
+      if (Player.loopOnEnded && loop) {
         this.seekTo(0)
       }
       onEnded()
