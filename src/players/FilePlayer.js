@@ -12,7 +12,7 @@ const DASH_EXTENSIONS = /\.(mpd)($|\?)/i
 const DASH_SDK_URL = 'https://cdnjs.cloudflare.com/ajax/libs/dashjs/2.5.0/dash.all.min.js'
 const DASH_GLOBAL = 'dashjs'
 
-class FilePlayer extends Component {
+export class FilePlayer extends Component {
   static displayName = 'FilePlayer'
   componentDidMount () {
     this.addListeners()
