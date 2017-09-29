@@ -95,11 +95,9 @@ export function omit (object, ...arrays) {
 export function callPlayer (method, ...args) {
   // Util method for calling a method on this.player
   // but guard against errors and console.warn instead
-  if (!this.props.isReady || !this.player || !this.player[method]) {
+  if (!this.player || !this.player[method]) {
     let message = `ReactPlayer: ${this.constructor.displayName} player could not call %c${method}%c – `
-    if (!this.props.isReady) {
-      message += 'The player was not ready'
-    } else if (!this.player) {
+    if (!this.player) {
       message += 'The player was not available'
     } else if (!this.player[method]) {
       message += 'The method was not available'
